@@ -1,0 +1,27 @@
+{
+  "name": "bloom-filter",
+  "version": "1.0.0",
+  "description": "A simple implementation of Bloom Filter.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guigaoliveira/bloom-filter.git"
+  },
+  "keywords": [
+    "bloomfilter"
+  ],
+  "author": "Guilherme Matheus Borges de Oliveira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guigaoliveira/bloom-filter/issues"
+  },
+  "homepage": "https://github.com/guigaoliveira/bloom-filter#readme",
+  "dependencies": {
+    "farmhash": "^2.0.4",
+    "seedrandom": "^2.4.3",
+    "xxhash": "^0.2.4"
+  }
+}
