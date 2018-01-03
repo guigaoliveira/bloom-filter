@@ -1,3 +1,4 @@
+"use strict";
 const { nthHash, setOneToArray, isString } = require("./utils");
 const bloomObj = {};
 const create = (filterSize, numHashs) =>
@@ -22,4 +23,4 @@ const add = val => {
 };
 const get = () => bloomObj.arr;
 const test = val => recursiveTest(val, bloomObj.arr, bloomObj.n);
-module.exposts = { create, add, test };
+module.exports = { create, add, test };
