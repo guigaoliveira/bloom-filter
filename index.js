@@ -8,11 +8,11 @@ const log2 = x => changeLogBase(x, 2);
 const bestK = (size, nElems) => floor(ln(2) * (size / nElems));
 const bestM = (nElems, fpRate) => floor(-(nElems * ln(fpRate) / ln(2) ** 2));
 const create = (nElems, fpRate) => {
-  const getM = bestM(nElems * 8, fpRate);
+  const getM = bestM(nElems, fpRate);
   const arrayBuff = new ArrayBuffer(getM);
   return Object.assign(bloomObj, {
     arr: new Uint8Array(arrayBuff),
-    kHashs: bestK(getM, nElems)
+    kHashs: bestK(getM * 8, nElems)
   });
 };
 const size = () => bloomObj.arr.length;
