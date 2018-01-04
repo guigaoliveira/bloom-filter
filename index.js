@@ -9,8 +9,9 @@ const bestK = (size, nElems) => floor(ln(2) * (size / nElems));
 const bestM = (nElems, fpRate) => floor(-(nElems * ln(fpRate) / ln(2) ** 2));
 const create = (nElems, fpRate) => {
   const getM = bestM(nElems * 8, fpRate);
+  const arrayBuff = new ArrayBuffer(getM);
   return Object.assign(bloomObj, {
-    arr: Array(getM).fill(0),
+    arr: new Uint8Array(arrayBuff),
     kHashs: bestK(getM, nElems)
   });
 };
