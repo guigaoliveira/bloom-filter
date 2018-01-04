@@ -1,18 +1,22 @@
-const xxhash = require("xxhash");
 const farmhash = require("farmhash");
 const seedrandom = require("seedrandom");
-const seed = Math.abs(seedrandom().int32());
+const createSeed = () => Math.abs(seedrandom().int32());
+const seed1 = createSeed();
+const seed2 = createSeed() + seed1;
 const isString = obj =>
   Object.prototype.toString.call(obj) === "[object String]";
 const getBuffer = val => Buffer.from(val, "ascii");
-const applyFarmHash = val => farmhash.hash64WithSeed(getBuffer(val), seed);
-const applyXXHash = val => xxhash.hash64(getBuffer(val), seed).readUInt32LE(0);
+const applyFarmHash = (val, seed) =>
+  farmhash.hash64WithSeed(getBuffer(val), seed);
 const len = arr => arr.length;
-const nthHash = (data, n, arr) =>
-  (applyFarmHash(data) + n * applyXXHash(data)) % len(arr);
-const setOneToArray = (arr, i) => {
-  if (!arr[i]) arr[i] = 1;
-  return arr;
+const nthHash = (arr, val, k) => {
+  const hash1 = applyFarmHash(val, seed1);
+  const hash2 = applyFarmHash(val, seed2);
+  return (hash1 + k * hash2) % len(arr);
+};
+const setOneToArray = (arr, val, k) => {
+  const index = nthHash(arr, val, k);
+  if (!arr[index]) arr[index] = 1;
 };
 
 module.exports = { nthHash, setOneToArray, isString };

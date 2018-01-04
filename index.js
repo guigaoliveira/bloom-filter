@@ -1,26 +1,35 @@
 "use strict";
 const { nthHash, setOneToArray, isString } = require("./utils");
 const bloomObj = {};
-const create = (filterSize, numHashs) =>
-  Object.assign(bloomObj, {
-    arr: Array(filterSize).fill(0),
-    n: numHashs
+const floor = x => Math.floor(x);
+const ln = x => Math.log(x);
+const changeLogBase = (x, y) => ln(y) / ln(x);
+const log2 = x => changeLogBase(x, 2);
+const bestK = (size, nElems) => floor(ln(2) * (size / nElems));
+const bestM = (nElems, fpRate) => floor(-(nElems * ln(fpRate) / ln(2) ** 2));
+const create = (nElems, fpRate) => {
+  const getM = bestM(nElems * 8, fpRate);
+  return Object.assign(bloomObj, {
+    arr: Array(getM).fill(0),
+    kHashs: bestK(getM, nElems)
   });
-const recursiveAdd = (val, arr, n) =>
-  n === 0
-    ? arr
-    : recursiveAdd(val, setOneToArray(arr, nthHash(val, n, arr)), n - 1);
-const recursiveTest = (val, arr, n) => {
-  if (n === 0) {
-    return true;
-  }
-  return !arr[nthHash(val, n, arr)] ? false : recursiveTest(val, arr, n - 1);
 };
+const size = () => bloomObj.arr.length;
 const add = val => {
   if (!isString(val)) throw new TypeError("Only String type is allowed!");
-  recursiveAdd(val, bloomObj.arr, bloomObj.n);
+  const { arr, kHashs } = bloomObj;
+  for (let j = 0; j < kHashs; j++) {
+    setOneToArray(arr, val, j);
+  }
   return true;
 };
-const get = () => bloomObj.arr;
-const test = val => recursiveTest(val, bloomObj.arr, bloomObj.n);
-module.exports = { create, add, test };
+const test = val => {
+  const { arr, kHashs } = bloomObj;
+  for (let j = 0; j < kHashs; j++) {
+    if (!arr[nthHash(arr, val, j)]) {
+      return false;
+    }
+  }
+  return true;
+};
+module.exports = { create, add, test, size };
