@@ -9,7 +9,7 @@ const create = (nElems, fpRate) => {
   const arrayBuff = new ArrayBuffer(floor(getM / 8));
   return Object.assign(bloom, {
     arr: new Uint8Array(arrayBuff),
-    hashs: bestK(getM * 8, nElems)
+    hashs: bestK(getM, nElems)
   });
 };
 const size = () => len(bloom.arr);
