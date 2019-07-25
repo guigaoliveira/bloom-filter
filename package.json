@@ -21,6 +21,6 @@
   "homepage": "https://github.com/guigaoliveira/bloom-filter#readme",
   "dependencies": {
     "farmhash": "^2.0.4",
-    "seedrandom": "^2.4.3"
+    "seedrandom": "^3.0.1"
   }
 }
