@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/guigaoliveira/bloom-filter#readme",
   "dependencies": {
-    "farmhash": "^2.0.4",
+    "farmhash": "^3.0.0",
     "seedrandom": "^2.4.3"
   }
 }
