@@ -1,5 +1,5 @@
 "use strict";
-const { hash, isString, len, toCorrect, floor, ln, log2 } = require("./utils");
+const { hash, isString, len, toCorrect, floor, ln } = require("./utils");
 const bloom = {};
 const bestK = (nBits, nElems) => toCorrect(ln(2) * (nBits / nElems)); // see https://en.wikipedia.org/wiki/Bloom_filter#Optimal_number_of_hash_functions
 const bestM = (nElems, fpRate) =>
